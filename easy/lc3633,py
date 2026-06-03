@@ -1,0 +1,25 @@
+class Solution:
+    def earliestFinishTime(self, landStartTime: List[int], landDuration: List[int], waterStartTime: List[int], waterDuration: List[int]) -> int:
+        
+        n, m = len(landStartTime), len(waterStartTime)
+        
+        earliestLandEnd = float('inf')
+        for i in range(n):
+            earliestLandEnd = min(earliestLandEnd, landStartTime[i] + landDuration[i])
+        
+        earliestWaterEnd = float('inf')
+        for i in range(m):
+            earliestWaterEnd = min(earliestWaterEnd, waterStartTime[i] + waterDuration[i])
+        
+        best = float('inf')
+        for i in range(m):
+            cur_best = max(earliestLandEnd, waterStartTime[i]) + waterDuration[i]
+            best = min(best, cur_best)
+
+        for i in range(n):
+            cur_best = max(earliestWaterEnd, landStartTime[i]) + landDuration[i]
+            best = min(best, cur_best)
+        
+        return best
+
+
